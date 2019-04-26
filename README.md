@@ -1,1 +1,1 @@
-Simple events calendar build entirely with django
+Web app makes use of Django-jet admin dashboard
