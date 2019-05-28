@@ -36,9 +36,6 @@ class EventAdmin(admin.ModelAdmin):
     search_fields = ('name', 'date_start')
     actions = [publish, unpublish]
 
-    def get_queryset(self, request):
-        return Event.objects.get_queryset(all=True)
-
 
 class CategoryAdmin(admin.ModelAdmin):
     list_display = ('name', 'slug')

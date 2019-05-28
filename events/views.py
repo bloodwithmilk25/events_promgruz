@@ -12,11 +12,11 @@ class UpcomingEventsView(ListView):
     context_object_name = 'events'
 
     def get_queryset(self):
-        return Event.objects.filter(date_end__gte=datetime.today()).order_by('date_start')
+        return Event.objects.published(date_end__gte=datetime.today()).order_by('date_start')
 
 
 class PastEventsView(TemplateView):
-    queryset = Event.objects.filter(date_end__lt=datetime.today()).order_by('-date_start')
+    queryset = Event.objects.published(date_end__lt=datetime.today()).order_by('-date_start')
     template_name = 'events.html'
     items_on_page = 6
 
@@ -25,6 +25,7 @@ class PastEventsView(TemplateView):
         event_list = self.queryset
         paginator = Paginator(event_list, self.items_on_page)
         page = self.request.GET.get('page', 1)
+
         if self.request.is_ajax():
             query = self.request.GET.get('page')
             if query is not None:
@@ -52,7 +53,7 @@ class LocationDetailView(DetailView):
 
 
 def search(request):
-    event_list = Event.objects.get_queryset().order_by('-date_start')
+    event_list = Event.objects.published().order_by('-date_start')
     q = request.GET.get("q")
     if q:
         q = q.lower()  # uppercase the first letter of query

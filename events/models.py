@@ -59,17 +59,14 @@ def year_choices():
     return [(r, r) for r in range(2010, datetime.date.today().year+4)]
 
 
-class EventManager(models.Manager):
+class EventPublishedManager(models.Manager):
     """
-    changing get_queryset() to show only published events.
-    if all is set to True it will show both published and unpublished
-    if False, which is default it will show only published ones
+    Show only published events
     """
-    def get_queryset(self, all=False):
-        if not all:
-            return super().get_queryset().filter(published=True)
-        else:
-            return super().get_queryset()
+    use_for_related_fields = True
+
+    def published(self, **kwargs):
+        return self.filter(published=True, **kwargs)
 
 
 class Event(models.Model):
@@ -94,7 +91,7 @@ class Event(models.Model):
     straight_to_site = models.BooleanField(default=False, verbose_name='Перенаправлять сразу на сайт конференции')
     new_tab = models.BooleanField(default=False, verbose_name='Открывать сайт конференции в новой вкладке')
 
-    objects = EventManager()
+    objects = EventPublishedManager()
 
     def save(self, *args, **kwargs):
         if not self.id:
