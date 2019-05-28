@@ -20,14 +20,14 @@ TEMPLATES_DIR = os.path.join(BASE_DIR, 'events/templates/events')
 # See https://docs.djangoproject.com/en/2.1/howto/deployment/checklist/
 
 
-# with open('/etc/events_promgruz') as f:
-#     SECRET_KEY = f.read().strip()
-SECRET_KEY = "secret"
-GOOGLE_MAPS_API_KEY = 'some key'
+with open('/etc/events_promgruz') as f:
+    SECRET_KEY = f.read().strip()
+# SECRET_KEY = os.environ['EVENTS_PROMGRUZ']
+GOOGLE_MAPS_API_KEY = 'AIzaSyAlhlthQomcbCaSMrnBflTd4dROwCRewn8'
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = False
 
-ALLOWED_HOSTS = ['*']
+ALLOWED_HOSTS = ['events.mitenka.dp.ua','event.promgruz.com','events.promgruz.com']
 
 
 # Application definition

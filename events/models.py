@@ -38,7 +38,6 @@ class Location(models.Model):
     address = map_fields.AddressField(blank=True, max_length=200, verbose_name='Адрес')
     geolocation = map_fields.GeoLocationField(blank=True, max_length=100, help_text="XX.XXX ,YY.YYYY",
                                               verbose_name='Координаты')
-
     phone_regex = RegexValidator(regex=r'^\+?1?\d{9,15}$')
     phone_number = models.CharField(blank=True, validators=[phone_regex], max_length=15, verbose_name='Телефон')
     web_site = models.URLField(blank=True, verbose_name='Сайт')
@@ -90,10 +89,8 @@ class Event(models.Model):
     location = models.ForeignKey(Location, on_delete=models.PROTECT, null=True, blank=True, verbose_name='Место проведения')
     parent_event = models.ForeignKey('self', on_delete=models.PROTECT, null=True, blank=True, related_name='children',
                                      verbose_name='Проходит в рамках')
-
     related_events = models.ManyToManyField('self', blank=True, related_name='related', verbose_name='Связанные события')
     published = models.BooleanField(default=False, verbose_name='Отображать')
-
     straight_to_site = models.BooleanField(default=False, verbose_name='Перенаправлять сразу на сайт конференции')
     new_tab = models.BooleanField(default=False, verbose_name='Открывать сайт конференции в новой вкладке')
 
@@ -115,7 +112,6 @@ class Event(models.Model):
     def __str__(self):
         return self.name
 
-    @property
     def passed(self):
         """:returns boolean value
         if date_start >= today  >>> False
@@ -125,8 +121,6 @@ class Event(models.Model):
 
     def get_absolute_url(self):
         return reverse("events:event_detail", kwargs={"slug": self.slug})
-
-    @property
 
     def google_calendar_link(self):
         """generates a google calendar link according to event's data and returns it"""
