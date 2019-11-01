@@ -16,7 +16,7 @@ idna==2.7
 mysql-connector-python==8.0.12
 pbr==5.1.0
 pefile==2018.8.8
-Pillow==5.3.0
+Pillow==6.2.0
 protobuf==3.6.1
 python-dateutil==2.7.3
 python-ptrace==0.9.3
